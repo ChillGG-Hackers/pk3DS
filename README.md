@@ -1,7 +1,9 @@
 # pk3DS
+## Edition for stat randomization
+
 pk3DS: A package of Pokémon (3DS) ROM Editing Tools by various contributors.
 
-Edition for stat randomization
+Edit by Mixone
 
 ![RomFS Editing Tools](https://i.imgur.com/IDVCMfx.png)
 ![ExeFS Editing Tools](https://i.imgur.com/Ied0sVV.png)

@@ -1302,7 +1302,10 @@ namespace pk3DS
         {
             var ofd = new OpenFileDialog();
             if (DialogResult.OK != ofd.ShowDialog())
+            {
+                Console.WriteLine("Event logged");
                 return;
+            }
 
             string path = ofd.FileName;
             FileInfo fi = new FileInfo(path);
