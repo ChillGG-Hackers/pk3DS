@@ -92,8 +92,8 @@ public partial class MoveEditor6 : Form
                 RTB.Text = moveflavor[entry].Replace("\\n", Environment.NewLine);
 
                 CB_Type.SelectedIndex = data[0x00];
-                CB_Quality.SelectedIndex = data[0x01];
-                CB_Category.SelectedIndex = data[0x02];
+                CB_Quality.SelectedIndex = (data[0x01] == 255) ? 1 : data[0x01];
+                CB_Category.SelectedIndex = (data[0x02] == 255) ? 1 : data[0x02];
                 NUD_Power.Value = data[0x3];
                 NUD_Accuracy.Value = data[0x4];
                 NUD_PP.Value = data[0x05];
@@ -300,16 +300,27 @@ public partial class MoveEditor6 : Form
                 {
                     int newType = rnd.Next(0, 18); // Randomize new type
                     string newTypeSTR = types[newType]; // Text for new type
+                    Console.WriteLine(CB_Type.SelectedIndex);
                     string oldTypeSTR = types[CB_Type.SelectedIndex]; // Text for old type
-                    int oldIndex = 0; 
-                    if (CB_Move.Text.Contains(oldTypeSTR))
+                    int oldIndex = 0;
+                    //Console.WriteLine(types.Any(CB_Move.Text.Contains));
+                    //if (CB_Move.Text.Contains(oldTypeSTR))
+                    if (types.Any(CB_Move.Text.Contains))
                     {
-                        oldIndex = Array.IndexOf(movelist, CB_Move.Text); // Where in the list of moves is it?
-                        Console.WriteLine("Was:");
-                        Console.WriteLine(movelist[oldIndex]); // Print the old name
-                        movelist[oldIndex] = CB_Move.Text.Replace(oldTypeSTR, newTypeSTR); // Replace old type string with new one
-                        Console.WriteLine("Now:");
-                        Console.WriteLine(movelist[oldIndex]); // print the new name
+                        foreach (string type in types)
+                        {
+                            if (CB_Move.Text.Contains(type) & type != newTypeSTR & type != oldTypeSTR)
+                            {
+                                oldIndex = Array.IndexOf(movelist, CB_Move.Text); // Where in the list of moves is it?
+                                Console.WriteLine("Was:");
+                                Console.WriteLine(movelist[oldIndex]); // Print the old name
+                                movelist[oldIndex] = CB_Move.Text.Replace(oldTypeSTR, newTypeSTR); // Replace old type string with new one
+                                Console.WriteLine("Now:");
+                                Console.WriteLine(movelist[oldIndex]); // print the new name
+                                break;
+                            }
+                        }
+                        
                     }
                     CB_Type.SelectedIndex = newType;
                 }
